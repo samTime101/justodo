@@ -1,8 +1,9 @@
 export interface TodoItem {
-    id: string;
+    huid: string;
     heading: string;
     filePath: string;
     line: number;
     done: boolean;
     createdAt: Date;
+    modifiedAt?: Date;
 }

@@ -1,15 +1,28 @@
 import * as vscode from 'vscode';
-import { processTodoLine } from './features/TodoProcessor';
+
+import { TodoManager } from './Main';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	const disposable = vscode.commands.registerCommand('todos.createTodo', () => {
+	const createTodoDisposable = vscode.commands.registerCommand('todos.createTodo', () => {
 		const editor = vscode.window.activeTextEditor;
-		if (!editor) {return;}
-		processTodoLine(editor);
+		if (!editor) { 
+			return;
+		}
+
+		const todoManager = new TodoManager(editor);
+		todoManager.createTodo();
+	});
+	const markTodoDoneDisposable = vscode.commands.registerCommand('todos.markTodo', () => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) { 
+			return;
+		}
+		const todoManager = new TodoManager(editor);
+		todoManager.markTodoDone();
 	});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(markTodoDoneDisposable);
+	context.subscriptions.push(createTodoDisposable);
 }
-
-export function deactivate() {}
+export function deactivate() { }

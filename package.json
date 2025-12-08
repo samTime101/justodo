@@ -3,6 +3,15 @@
   "displayName": "todos",
   "description": "A simple code todos marker and storer for vs code",
   "version": "0.0.1",
+  "publisher": "samTime101",
+  "author": {
+    "name": "samTime101",
+    "url": "https://github.com/samTime101"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samTime101/Todos.git"
+  },
   "engines": {
     "vscode": "^1.106.1"
   },
@@ -16,12 +25,20 @@
       {
         "command": "todos.createTodo",
         "title": "Hello World"
+      },{
+        "command": "todos.markTodo",
+        "title": "Mark TODO as Done"
       }
     ],
     "keybindings": [
       {
         "command": "todos.createTodo",
-        "key": "ctrl+shift+8",
+        "key": "ctrl+shift+6",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "todos.markTodo",
+        "key": "ctrl+shift+7",
         "when": "editorTextFocus"
       }
     ]
