@@ -18,11 +18,7 @@ https://github.com/user-attachments/assets/1d5ab5a4-b989-45ef-973e-b0806925a0b7
 - Node.js 18+ recommended for tooling (build/test)
 
 ## Installation
-- From VSIX (local build):
-  1. download the latest release from the [releases page](https://github.com/samTime101/todos/releases)
-  2. open the VS Code Extensions view (Ctrl+Shift+P → "Extensions: Show Installed Extensions")
-  3. click the "..." menu → "Install from VSIX..." → pick the downloaded `.vsix` file
-
+https://github.com/user-attachments/assets/5fc2254b-78f9-4857-b1e1-9bf94c1ff72c
 
 ## Usage
 1) Write a TODO comment on any line, e.g. `// TODO: handle empty state`.
