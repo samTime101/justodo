@@ -2,8 +2,9 @@
   "name": "todos",
   "displayName": "todos",
   "description": "A simple code todos marker and storer for vs code",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "publisher": "samTime101",
+  "icon": "images/icon.png",
   "author": {
     "name": "samTime101",
     "url": "https://github.com/samTime101"

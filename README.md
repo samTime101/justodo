@@ -15,9 +15,9 @@ comments and keeps them synced in a workspace-local JSON store.
 
 ## Installation
 - From VSIX (local build):
-  1. download the latest release from the [releases page](https://github.com/samTime101/todos/releases)
-  2. open the VS Code Extensions view (Ctrl+Shift+P → "Extensions: Show Installed Extensions")
-  3. click the "..." menu → "Install from VSIX..." → pick the downloaded `.vsix` file
+    1. download the latest release from the [releases page](https://github.com/samTime101/todos/releases)
+    2. open the VS Code Extensions view (Ctrl+Shift+P → "Extensions: Show Installed Extensions")
+    3. click the "..." menu → "Install from VSIX..." → pick the downloaded `.vsix` file
 
 
 ## Usage

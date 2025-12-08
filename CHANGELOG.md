@@ -4,6 +4,12 @@ All notable changes to the "todos" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.1] - 2025-12-08
+
+### Added
+- Added Extension versioning in `package.json` to `1.0.1`.
+- Added Image icon for the extension in `package.json`.
+
 ## [1.0.0] - 2025-12-08
 
 ## Added
