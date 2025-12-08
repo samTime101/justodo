@@ -6,6 +6,7 @@ import { findGitRepo } from './findGitRepo';
 import { ensureTodosFolder } from './TodosFolder';
 import { updateTodoLine } from './updateTodoLine';
 import { initializeGitifNotExists } from './initializeGitifNotExists';
+import { initializeJsonifNotExists } from './initializeJsonifNotExists';
 
 export async function processTodoLine(editor: vscode.TextEditor) {
     /*
@@ -33,7 +34,8 @@ export async function processTodoLine(editor: vscode.TextEditor) {
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(doc.uri);
     const repo = await findGitRepo(workspaceFolder);
     await initializeGitifNotExists(repo);
-    await ensureTodosFolder(repo);
+    const todosFolderUri = await ensureTodosFolder(repo);
     const huid = generateHUID();
     await updateTodoLine(editor, huid, heading, doc.languageId);
+    await initializeJsonifNotExists(todosFolderUri);
 }
