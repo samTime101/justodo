@@ -1,4 +1,4 @@
-# Todos — VS Code Extension
+# justodo — VS Code Extension
 
 Lightweight VS Code extension that adds human-readable IDs (HUIDs) to TODO
 comments and keeps them synced in a workspace-local JSON store.
