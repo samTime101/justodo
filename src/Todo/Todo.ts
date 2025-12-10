@@ -236,7 +236,7 @@ export class Todo {
                 label: `$(${todo.done ? 'check' : 'circle-outline'}) ${todo.heading}`,
                 description: `HUID: ${todo.huid}`,
                 detail: todo.done
-                    ? `Marked At: ${todo.markedAt ? todo.markedAt.toLocaleString() : todo.createdAt.toLocaleString()}\n\nLine: ${todo.line + 1}`
+                    ? `Marked At: ${todo.markedAt ? todo.markedAt.toLocaleString() : todo.createdAt.toLocaleString()}`
                     : `Created At: ${todo.createdAt.toLocaleString()}`,
                 line: todo.line
             };

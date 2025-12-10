@@ -10,6 +10,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Added `todos.searchTodos` command (Ctrl+Shift+8) to list TODOs in the current file and jump to the selected line via Quick Pick.
 - Added helpers to gather TODOs per file and format them as Quick Pick items with status, timestamps, and line info.
 
+## Removed
+- Removed line information from Quick Pick items.
+
 ## [1.0.1] - 2025-12-08
 
 ### Added
