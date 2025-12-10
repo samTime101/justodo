@@ -2,7 +2,7 @@
   "name": "justodo",
   "displayName": "justodo",
   "description": "A simple code todos marker and storer for vs code",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "samTime101",
   "icon": "images/icon.png",
   "author": {
@@ -29,6 +29,9 @@
       },{
         "command": "todos.markTodo",
         "title": "Mark TODO as Done"
+      },{
+        "command": "todos.searchTodos",
+        "title": "Search TODOs in Current File"
       }
     ],
     "keybindings": [
@@ -40,6 +43,11 @@
       {
         "command": "todos.markTodo",
         "key": "ctrl+shift+7",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "todos.searchTodos",
+        "key": "ctrl+shift+8",
         "when": "editorTextFocus"
       }
     ]

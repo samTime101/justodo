@@ -5,5 +5,5 @@ export interface TodoItem {
     line: number;
     done: boolean;
     createdAt: Date;
-    modifiedAt?: Date;
+    markedAt?: Date;
 }

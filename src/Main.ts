@@ -16,6 +16,7 @@ import { Editor } from "./Editor/Editor";
 import * as vscode from "vscode";
 import { getCommentSymbol } from "./utils/getLanguageSymbol";
 import { getGeneratedHUID } from "./utils/getGeneratedHUID";
+import { TodoQuickPickItem } from "./types/QuickPickItem";
 
 /**
  * Manages TODO operations for a single editor.
@@ -81,7 +82,7 @@ export class TodoManager {
             huid,
             heading,
             filePath: currentFilePath,
-            line: currentLine,
+            line: currentLine + 1,
             done: false,
             createdAt: new Date(),
         });
@@ -118,4 +119,32 @@ export class TodoManager {
 
         vscode.window.showInformationMessage(`Marked TODO with HUID: ${existingUID} as done.`);
     }
+
+    /*
+    * Searches and displays all TODOs in the current file.
+    * @params None
+    * @returns {Promise<void>}  
+    * @since 1.0.2
+    */
+    public async searchTodosFile(): Promise<void> {
+        await this.init();
+        const currentFilePath = this.editorWrapper.getCurrentFilePath();
+        const todosInFile = await this.todo.getTodosInFile(vscode.Uri.file(currentFilePath));
+        const quickPick = vscode.window.createQuickPick<TodoQuickPickItem>();
+        quickPick.items = await this.todo.getTodosQuickPickItems(vscode.Uri.file(currentFilePath), todosInFile);
+        // fuck other long ass file path, we embrace only <filename>.<ext> lol
+        quickPick.placeholder = `Todos in ${currentFilePath.split('\\').pop()}`;
+        quickPick.onDidChangeSelection(selection => {
+            if (selection[0]) {
+                const selectedLine = selection[0].line;
+                const position = new vscode.Position(selectedLine, 0); 
+                this.editor.selection = new vscode.Selection(position, position);
+                this.editor.revealRange(new vscode.Range(position, position));
+                quickPick.hide();
+            }
+        });
+        quickPick.onDidHide(() => quickPick.dispose());
+        quickPick.show();
+    }
 }
+

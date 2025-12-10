@@ -10,6 +10,7 @@
 
 import * as vscode from 'vscode';
 import { TodoItem } from '../types/TodoItem';
+import { TodoQuickPickItem } from '../types/QuickPickItem';
 
 /**
  * Handles reading, writing, and updating TODO items in a JSON file.
@@ -93,8 +94,9 @@ export class Todo {
                     [huid]: {
                         heading,
                         done,
+                        line,
                         createdAt,
-                        modifiedAt: null
+                        markedAt: null
                     }
                 }
             };
@@ -168,5 +170,78 @@ export class Todo {
         } catch {
             return false;
         }
+    }
+
+    /**
+     * Retrieves all TODO items for a specific file.
+     * 
+     * @async
+     * @param {vscode.Uri} currentFilePath - The URI of the file to retrieve TODOs from.
+     * @returns {Promise<TodoItem[]>} An array of TODO items found in the file. Returns an empty array if no TODOs are found or on error.
+     * @since 1.0.2
+     */
+
+    public async getTodosInFile(currentFilePath: vscode.Uri): Promise<TodoItem[]> {
+        try {
+            const todosJson = await this.readJson();
+            const todosInFile: TodoItem[] = [];
+            const filePathStr = currentFilePath.fsPath;
+
+            for (const todoEntry of todosJson.todos) {
+                const fileTodos = todoEntry[filePathStr];
+                if (fileTodos) {
+                    for (const huid in fileTodos) {
+                        const todoData = fileTodos[huid];
+                        todosInFile.push({
+                            huid,
+                            heading: todoData.heading,
+                            filePath: filePathStr,
+                            line: todoData.line - 1,
+                            done: Boolean(todoData.done),
+                            createdAt: new Date(todoData.createdAt),
+                            markedAt: todoData.markedAt ? new Date(todoData.markedAt) : undefined
+                        });
+                    }
+                }
+            }
+
+            return todosInFile;
+        } catch (err) {
+            console.error('Failed to get todos in file:', err);
+            return [];
+        }
+    }
+    /**
+     * Converts an array of TODO items into VS Code QuickPick items for selection in the UI.
+     * 
+     * @async
+     * @param {vscode.Uri} currentFilePath - The URI of the file containing TODOs.
+     * @param {TodoItem[]} todosInFile - Array of TODO items to convert into QuickPick items.
+     * @returns {Promise<TodoQuickPickItem[]>} An array of QuickPick items representing the TODOs.
+     * @since 1.0.2
+     * 
+     * @example
+     * const todosInFile = await todoManager.getTodosInFile(fileUri);
+     * const quickPickItems = await todoManager.getTodosQuickPickItems(fileUri, todosInFile);
+     * vscode.window.showQuickPick(quickPickItems);
+     */
+    public async getTodosQuickPickItems(currentFilePath: vscode.Uri, todosInFile: TodoItem[]): Promise<TodoQuickPickItem[]> {
+        if (todosInFile.length === 0) {
+            vscode.window.showInformationMessage(`No TODOs found in ${currentFilePath}.`);
+            return [];
+        }
+
+        const quickPickItems = todosInFile.map((todo) => {
+            return {
+                label: `$(${todo.done ? 'check' : 'circle-outline'}) ${todo.heading}`,
+                description: `HUID: ${todo.huid}`,
+                detail: todo.done
+                    ? `Marked At: ${todo.markedAt ? todo.markedAt.toLocaleString() : todo.createdAt.toLocaleString()}\n\nLine: ${todo.line + 1}`
+                    : `Created At: ${todo.createdAt.toLocaleString()}`,
+                line: todo.line
+            };
+        }
+        );
+        return quickPickItems;
     }
 }

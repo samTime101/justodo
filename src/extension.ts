@@ -22,6 +22,16 @@ export function activate(context: vscode.ExtensionContext) {
 		todoManager.markTodoDone();
 	});
 
+	const searchTodosCurrentDisposable = vscode.commands.registerCommand('todos.searchTodos', async () => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) { 
+			return;
+		}
+		const todoManager = new TodoManager(editor);
+		todoManager.searchTodosFile();
+	});
+
+	context.subscriptions.push(searchTodosCurrentDisposable);
 	context.subscriptions.push(markTodoDoneDisposable);
 	context.subscriptions.push(createTodoDisposable);
 }

@@ -4,6 +4,12 @@ All notable changes to the "todos" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.2] - 2025-12-10
+
+### Added
+- Added `todos.searchTodos` command (Ctrl+Shift+8) to list TODOs in the current file and jump to the selected line via Quick Pick.
+- Added helpers to gather TODOs per file and format them as Quick Pick items with status, timestamps, and line info.
+
 ## [1.0.1] - 2025-12-08
 
 ### Added
