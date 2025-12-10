@@ -2,7 +2,7 @@
   "name": "justodo",
   "displayName": "justodo",
   "description": "A simple code todos marker and storer for vs code",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "samTime101",
   "icon": "images/icon.png",
   "author": {
@@ -25,7 +25,7 @@
     "commands": [
       {
         "command": "todos.createTodo",
-        "title": "Hello World"
+        "title": "Add TODO"
       },{
         "command": "todos.markTodo",
         "title": "Mark TODO as Done"

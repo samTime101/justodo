@@ -4,6 +4,11 @@ All notable changes to the "todos" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.4] - 2025-12-10
+
+### Fixed
+- Changed the default title of `todos.createTodo` command to "Add TODO" in `package.json`.
+
 ## [1.0.3] - 2025-12-10
 
 ### Removed
