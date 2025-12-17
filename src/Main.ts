@@ -137,7 +137,7 @@ export class TodoManager {
         quickPick.onDidChangeSelection(selection => {
             if (selection[0]) {
                 const selectedLine = selection[0].line;
-                const position = new vscode.Position(selectedLine, 0); 
+                const position = new vscode.Position(selectedLine, 0);
                 this.editor.selection = new vscode.Selection(position, position);
                 this.editor.revealRange(new vscode.Range(position, position));
                 quickPick.hide();
@@ -146,5 +146,33 @@ export class TodoManager {
         quickPick.onDidHide(() => quickPick.dispose());
         quickPick.show();
     }
+    /**
+     * Searches all TODOs across the entire workspace.
+     * @param None
+     * @returns {Promise<void>}  
+     * @since 1.0.5
+     */
+    public async searchTodosALL(): Promise<void> {
+        await this.init();
+        const allTodos = await this.todo.getAllTodos();
+        const quickPick = vscode.window.createQuickPick<TodoQuickPickItem>();
+        quickPick.items = await this.todo.getTodosQuickPickItems(undefined, allTodos);
+        quickPick.placeholder = 'All Todos in Workspace';
+        quickPick.onDidChangeSelection(async ([item]) => {
+            if (!item || !item.filePath){
+                return;
+            } 
+            const uri = vscode.Uri.file(item.filePath);
+            const editor = await vscode.window.showTextDocument(uri);
+
+            const position = new vscode.Position(item.line, 0);
+            editor.selection = new vscode.Selection(position, position);
+            editor.revealRange(new vscode.Range(position, position));
+            quickPick.hide();
+        });
+        quickPick.onDidHide(() => quickPick.dispose());
+        quickPick.show();
+    }
+
 }
 

@@ -4,6 +4,14 @@ All notable changes to the "todos" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.5] - 2025-12-10
+
+### Added
+- Added `todos.searchAllTodos` command (Ctrl+Shift+9) to list all
+- Added filePath to TodoQuickPickItem interface to enable navigation to selected TODOs across all files.
+- Added undefined check for currentFilePath in getTodosQuickPickItems to support listing TODOs from all files.
+
+
 ## [1.0.4] - 2025-12-10
 
 ### Fixed

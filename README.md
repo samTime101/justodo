@@ -33,6 +33,7 @@ https://github.com/user-attachments/assets/979c4d01-df12-440b-8808-5823dd2c3505
 3) To complete it, place the cursor on that line and run `todos.markTodo`
    (or `Ctrl+Shift+7`). The line is removed and the entry is marked done.
 4) To browse TODOs in the current file, run `todos.searchTodos` (or `Ctrl+Shift+8`), pick one from the Quick Pick list, and the editor jumps to that line.
+5) To browse TODOs in all files, run `todos.searchAllTodos` (or `Ctrl+Shift+9`), pick one from the Quick Pick list, and the editor jumps to that line.
 
 ## Storage
 - A `.todos` folder is created at the workspace root with `todos.json`.
