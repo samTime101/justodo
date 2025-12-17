@@ -211,6 +211,43 @@ export class Todo {
             return [];
         }
     }
+
+    /**
+     * Retrieves all TODO items across all files.
+     * 
+     * @async
+     * @returns {Promise<TodoItem[]>} An array of all TODO items. Returns an empty array on error.
+     * @since 1.0.5
+     */
+    public async getAllTodos(): Promise<TodoItem[]> {
+        try {
+            const todosJson = await this.readJson();
+            const allTodos: TodoItem[] = [];
+            for (const todoEntry of todosJson.todos) {
+                for (const filePath in todoEntry) {
+                    const fileTodos = todoEntry[filePath];
+                    for (const huid in fileTodos) {
+                        const todoData = fileTodos[huid];
+                        allTodos.push({
+                            huid,
+                            heading: todoData.heading,
+                            filePath,
+                            line: todoData.line - 1,
+                            done: Boolean(todoData.done),
+                            createdAt: new Date(todoData.createdAt),
+                            markedAt: todoData.markedAt ? new Date(todoData.markedAt) : undefined
+                        });
+                    }
+                }
+            }
+            return allTodos;
+        }
+        catch (err) {
+            console.error('Failed to get all todos:', err);
+            return [];
+        }   
+    }
+
     /**
      * Converts an array of TODO items into VS Code QuickPick items for selection in the UI.
      * 
@@ -225,12 +262,11 @@ export class Todo {
      * const quickPickItems = await todoManager.getTodosQuickPickItems(fileUri, todosInFile);
      * vscode.window.showQuickPick(quickPickItems);
      */
-    public async getTodosQuickPickItems(currentFilePath: vscode.Uri, todosInFile: TodoItem[]): Promise<TodoQuickPickItem[]> {
+    public async getTodosQuickPickItems(currentFilePath: vscode.Uri | undefined, todosInFile: TodoItem[]): Promise<TodoQuickPickItem[]> {
         if (todosInFile.length === 0) {
             vscode.window.showInformationMessage(`No TODOs found in ${currentFilePath}.`);
             return [];
         }
-
         const quickPickItems = todosInFile.map((todo) => {
             return {
                 label: `$(${todo.done ? 'check' : 'circle-outline'}) ${todo.heading}`,
@@ -238,7 +274,8 @@ export class Todo {
                 detail: todo.done
                     ? `Marked At: ${todo.markedAt ? todo.markedAt.toLocaleString() : todo.createdAt.toLocaleString()}`
                     : `Created At: ${todo.createdAt.toLocaleString()}`,
-                line: todo.line
+                line: todo.line,
+                filePath: todo.filePath
             };
         }
         );

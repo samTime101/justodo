@@ -31,8 +31,18 @@ export function activate(context: vscode.ExtensionContext) {
 		todoManager.searchTodosFile();
 	});
 
+	const searchTodosAllDisposable = vscode.commands.registerCommand('todos.searchAllTodos', async () => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) { 
+			return;
+		}
+		const todoManager = new TodoManager(editor);
+		todoManager.searchTodosALL();
+	});
+
 	context.subscriptions.push(searchTodosCurrentDisposable);
 	context.subscriptions.push(markTodoDoneDisposable);
 	context.subscriptions.push(createTodoDisposable);
+	context.subscriptions.push(searchTodosAllDisposable);
 }
 export function deactivate() { }
